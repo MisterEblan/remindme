@@ -9,9 +9,12 @@ def main():
         sys.exit(-1)
 
     cli = RemindMeCLI(DateTimeFormatter())
+    args = sys.argv[1:]
+
+    print(f"Debug: {args}")
 
     try:
-        cli.run(sys.argv[1:])
+        cli.run(args)
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(-1)

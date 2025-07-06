@@ -2,13 +2,16 @@ import argparse
 import os
 import pathlib
 from datetime import datetime
+from colorama import Fore, Style, init
 from typing import List, Optional
 from .file_manager import FileManager
 from .formatters import DateTimeFormatter
 
+init()
+
 class RemindMeCLI:
     def __init__(self, formatter: DateTimeFormatter,
-                 path: str = f"{str(pathlib.Path.home())}/remindme"
+                 path: pathlib.Path = pathlib.Path.home() / "remindme"
                  ):
         self._file_manager = FileManager(path, formatter)
         self._formatter = formatter
@@ -27,18 +30,15 @@ class RemindMeCLI:
     def _parse_args(self, args: Optional[List[str]] = None):
         return self._parser.parse_args(args)
 
-    def _format_idea(self, idea: str, date: datetime) -> str:
-        time_str = self._formatter.time(date)
-
-        return f"{time_str} | {idea}\n"
-
     def _save_idea(self, idea: str):
+        print(f"Debug: saving idea {idea}")
         self._file_manager.write(idea)
 
     def _is_file_exists(self):
         day_str = self._formatter.day(datetime.now())
+        name = self._file_manager.directory / day_str
 
-        if os.path.exists(f"{self._file_manager.directory}/{day_str}.txt"):
+        if os.path.exists(name.with_suffix(".txt")):
             return True
 
         return False
@@ -54,12 +54,10 @@ class RemindMeCLI:
 
             date = datetime.now()
 
-            formatted_idea = self._format_idea(parsed_args.idea, date)
+            self._save_idea(parsed_args.idea)
 
-            self._save_idea(formatted_idea)
-
-            print("Idea saved")
+            print(f"{Fore.GREEN}Idea saved{Style.RESET_ALL}")
 
         except Exception as e:
-            print(f"Something went wrong: {e}")
+            print(f"{Fore.RED}Something went wrong: {e}{Style.RESET_ALL}")
 

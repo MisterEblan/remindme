@@ -1,10 +1,11 @@
+import pathlib
 import pytest
 import shutil
 from unittest.mock import Mock, patch, MagicMock
 from remindme.file_manager import FileManager
 from remindme.formatters import DateTimeFormatter
 
-DIR_PATH = "./ideas"
+DIR_PATH = pathlib.Path("./ideas")
 
 @pytest.fixture
 def mock_formatter():
@@ -38,7 +39,7 @@ def test_file_creation(mock_open, mock_exists, file_manager):
     
     file_manager.create_file()
     
-    mock_open.assert_called_once_with(f"{DIR_PATH}/05-07-2025.txt", "w")
+    mock_open.assert_called_once_with(DIR_PATH / "05-07-2025.txt", "w")
     mock_file.write.assert_called_once_with("")
 
 @patch('builtins.open', create=True)
@@ -49,7 +50,5 @@ def test_write(mock_open, file_manager):
     idea = "Implement convolution"
     file_manager.write(idea)
     
-    mock_open.assert_called_once_with(f"{DIR_PATH}/05-07-2025.txt", "a")
+    mock_open.assert_called_once_with(DIR_PATH / "05-07-2025.txt", "a")
     mock_file.write.assert_called_once_with(f"19-00 | {idea}\n")
-
-    shutil.rmtree(DIR_PATH)

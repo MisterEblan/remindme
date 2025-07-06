@@ -1,14 +1,15 @@
-from datetime import datetime
 import os
+import pathlib
+from datetime import datetime
 from .formatters import DateTimeFormatter
 
 class FileManager:
-    def __init__(self, path: str, formatter: DateTimeFormatter):
-        self._directory: str = path
+    def __init__(self, path: pathlib.Path, formatter: DateTimeFormatter):
+        self._directory: pathlib.Path = path
         self._formatter: DateTimeFormatter = formatter
 
     @property
-    def directory(self) -> str:
+    def directory(self) -> pathlib.Path:
         return self._directory
 
     def mkdir(self) -> None:
@@ -32,11 +33,11 @@ class FileManager:
         file_name = self._get_file_name()
 
 
-        if not os.path.exists(f"{file_name}"):
+        if not os.path.exists(file_name):
 
             print(f"Creating {file_name}")
 
-            with open(f"{file_name}", "w") as file:
+            with open(file_name, "w") as file:
                 file.write("")
 
         else:
@@ -47,21 +48,24 @@ class FileManager:
         Writes idea to today's file
         """
 
+        print(f"Debug: Writing to file")
+
         file_name = self._get_file_name()
         time = self._get_time()
+        formatted_idea = f"{time} | {idea}\n"
 
         with open(file_name, "a") as file:
-            file.write(f"{time} | {idea}\n")
+            file.write(formatted_idea)
+            print(f"Debug: {formatted_idea}")
 
-    def _get_file_name(self) -> str:
+    def _get_file_name(self) -> pathlib.Path:
         date = datetime.now()
 
-        return f"{self._directory}/{self._formatter.day(date)}.txt"
+        name: pathlib.Path = pathlib.Path(self._directory) / self._formatter.day(date)
+
+        return name.with_suffix(".txt")
 
     def _get_time(self) -> str:
-        # TODO: implement datetime.now
         date = datetime.now()
-
-        # date = datetime(2025, 7, 6, 19, 00)
 
         return self._formatter.time(date)

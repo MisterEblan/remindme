@@ -4,11 +4,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "remindme"
-version = "0.1.0"
+version = "0.1.1"
 description = "CLI tool for reminding some ideas that come up in a moment."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "colorama>=0.4.6",
     "pytest>=8.4.1",
 ]
 
