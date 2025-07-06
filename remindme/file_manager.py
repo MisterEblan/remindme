@@ -48,15 +48,12 @@ class FileManager:
         Writes idea to today's file
         """
 
-        print(f"Debug: Writing to file")
-
         file_name = self._get_file_name()
         time = self._get_time()
         formatted_idea = f"{time} | {idea}\n"
 
         with open(file_name, "a") as file:
             file.write(formatted_idea)
-            print(f"Debug: {formatted_idea}")
 
     def _get_file_name(self) -> pathlib.Path:
         date = datetime.now()

@@ -31,7 +31,6 @@ class RemindMeCLI:
         return self._parser.parse_args(args)
 
     def _save_idea(self, idea: str):
-        print(f"Debug: saving idea {idea}")
         self._file_manager.write(idea)
 
     def _is_file_exists(self):

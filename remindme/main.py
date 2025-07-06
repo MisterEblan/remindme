@@ -11,8 +11,6 @@ def main():
     cli = RemindMeCLI(DateTimeFormatter())
     args = sys.argv[1:]
 
-    print(f"Debug: {args}")
-
     try:
         cli.run(args)
     except Exception as e:
