@@ -8,7 +8,9 @@ version = "0.1.0"
 description = "CLI tool for reminding some ideas that come up in a moment."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "pytest>=8.4.1",
+]
 
 [project.scripts]
 remindme = "remindme.main:main"

@@ -1,5 +1,5 @@
 import datetime
-from utils.formatters import DateTimeFormatter
+from remindme.formatters import DateTimeFormatter
 
 def test_formatter():
     expected_day  = "05-07-2025"

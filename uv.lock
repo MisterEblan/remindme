@@ -76,16 +76,24 @@ wheels = [
 ]
 
 [[package]]
-name = "reminder"
+name = "remindme"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
+    { name = "pytest" },
+]
+
+[package.dev-dependencies]
+dev = [
     { name = "pytest" },
     { name = "pytest-mock" },
 ]
 
 [package.metadata]
-requires-dist = [
+requires-dist = [{ name = "pytest", specifier = ">=8.4.1" }]
+
+[package.metadata.requires-dev]
+dev = [
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "pytest-mock", specifier = ">=3.14.1" },
 ]
